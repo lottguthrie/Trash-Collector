@@ -1,2 +1,1 @@
-# Trash-Collector
-Trash Collector Project
+# trash_collector_starter
