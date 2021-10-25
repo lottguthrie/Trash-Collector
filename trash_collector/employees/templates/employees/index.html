@@ -1,10 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'employees/employee_base.html' %}
 
 {% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
 
 {% block content %}
   {% if user.is_authenticated %}
     Hello Employee {{ user.username }}!
+    <br />
+    <br />
+    Here is your lists of Todays Customers:
+
+    customers = Customer.objects.filter(zip_code="77573")
+    pickup_day = 
+
+
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
