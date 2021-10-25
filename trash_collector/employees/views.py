@@ -12,6 +12,13 @@ from customers.models import Customer
 # Create your views here.
 
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
+def home(request):
+    Empolyee = apps.get_model('employees.Employee')
+    employees = Employee.objects.all('employees.Employee')
+    context = {
+        'employees': employees,
+
+        }
 
 def index(request):
     # This line will get the Customer model from the other app, it can now be used to query the db for Customers
@@ -27,7 +34,7 @@ def index(request):
             'logged_in_employees': logged_in_employees,
             'today': today
         }
-        return render(request, 'employee/index.html', context)
+        return render(request, 'employees/index.html', context)
     except ObjectDoesNotExist:
         return HttpResponseRedirect(reverse('employees:create'))
 
