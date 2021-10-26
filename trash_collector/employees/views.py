@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from datetime import date
 from django.views import generic
-from django.db.models import F
+from django.db.models import Q
 
 from.models import Employee
 from customers.models import Customer
@@ -70,15 +70,14 @@ def detail(request, customer_id):
     return render(request, 'customers/detail.html', {'customers': customer_from_db})
 
 @login_required
-def edit(request):
+def edit(request, Customer):
     logged_in_user = request.user
     logged_in_employees = Employee.objects.get(user=logged_in_user)
-    customer_from_db = Customer.objects.get(pk=request)
+    customer_from_db = Customer.objects.get(Q(customer_id= 1))
     if request.method == 'POST':
-        
-        customer_from_db.customer_balance = request.POST.get('customer_balance')
+        customer_from_db.balance = request.POST.get('balance')
         customer_from_db.save()
-        return HttpResponseRedirect(reverse('customers:index'))
+        return HttpResponseRedirect(reverse('employees:index'))
     else:
         Customer = apps.get_model('customers.Customer')
         all_customers = Customer.objects.all()
@@ -86,7 +85,7 @@ def edit(request):
             'customers': customer_from_db,
             'all_customers': all_customers
         }
-        return render(request, 'customers/edit_profile.html', context)
+        return render(request, 'customers/edit.html', context)
 
 
 
@@ -104,9 +103,9 @@ class CustomerListView(generic.ListView):
         Customer = apps.get_model('customers.Customer')
         # query for the Team object with the pk that got passed in from the url path in urls.py
         # self.kwargs contains the named arguments passed in from the url, in this case 'team'
-        self.customer = get_object_or_404(Customer, name=self.kwargs['customer'])
+        self.customer = get_object_or_404(Customer, name=self.kwargs['customers'])
         # query set will return all the Player objects whose team matches the team we just found
-        return Customer.objects.filter(weekly_pickup=self.customer)
+        return Customer.objects.filter(customers=self.customer)
 
     # We use this to add an additional property to our context object, in this case the name of the team
     # This allows our template to display more than just the results of the queryset
