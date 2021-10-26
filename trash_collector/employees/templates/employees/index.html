@@ -7,12 +7,25 @@
     Hello Employee {{ user.username }}!
     <br />
     <br />
-    Here is your lists of Todays Customers:
+    <h3>Today is:</h3>
+    <p>{{day_of_week}}</p>
+    <p>{{today}}</p>
+    
+    <h3> Customers for the day are:</h3>
 
-    customers = Customer.objects.filter(zip_code="77573")
-    pickup_day = 
+      <ul>
+        {% for customer in customers_today %}
+        <li>{{customer.name}}</li>
+        {% endfor %}
+      </ul>
 
+      
 
+      
+
+      
+      
+    
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
