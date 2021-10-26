@@ -7,6 +7,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from datetime import date
 from django.views import generic
+from django.db.models import F
 
 # from trash_collector.customers.views import one_time_pickup
 from.models import Employee
@@ -82,16 +83,13 @@ def detail(request, customer_id):
     return render(request, 'customers/detail.html', {'customers': customer_from_db})
 
 @login_required
-def edit(request, customer_id):
+def edit(request):
     logged_in_user = request.user
     logged_in_employees = Employee.objects.get(user=logged_in_user)
-    customer_from_db = Customer.objects.get(pk=customer_id)
+    customer_from_db = Customer.objects.get(pk=request)
     if request.method == 'POST':
-        customer_from_db.customer_id = request.POST.get('customer_id')
-        customer_from_db.name = request.POST.get('name')
-        customer_from_db.address = request.POST.get('address')
-        customer_from_db.zip_code = request.POST.get('zip_code')
-        customer_from_db.weekly_pickup = request.POST.get('weekly_pickup')
+        
+        customer_from_db.customer_balance = request.POST.get('customer_balance')
         customer_from_db.save()
         return HttpResponseRedirect(reverse('customers:index'))
     else:
