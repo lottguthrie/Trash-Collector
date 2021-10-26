@@ -1,3 +1,4 @@
+from django.db.models.fields import NullBooleanField
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.apps import apps
@@ -8,9 +9,11 @@ from datetime import date
 from django.views import generic
 from django.db.models import Q
 
+# from trash_collector.customers.views import one_time_pickup
 from.models import Employee
 from customers.models import Customer
-from django.shortcuts import get_object_or_404
+import calendar
+
 
 
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
@@ -23,12 +26,22 @@ def index(request):
     try:
         # This line will return the customer record of the logged-in user if one exists
         logged_in_employees = Employee.objects.get(user=logged_in_user)
-
         today = date.today()
+        day_of_week = calendar.day_name[today.weekday()]
+        todays_pickup = Customer.objects.filter(weekly_pickup = day_of_week)
+        customers_today =todays_pickup.filter(zip_code = logged_in_employees.zip_code)
+        # one_time = Customer.objects.filter(one_time_pickup = today)
+        # non_suspended = Customer.objects.filter(suspend_end = "No")
         
         context = {
             'logged_in_employees': logged_in_employees,
-            'today': today
+            'today': today,
+            'day_of_week': day_of_week,
+            'todays_pickup': todays_pickup,
+            "customers_today": customers_today,
+            # 'one_time': one_time,
+            # 'non_suspended': non_suspended
+            
         }
         return render(request, 'employees/index.html', context)
     except ObjectDoesNotExist:
