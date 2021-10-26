@@ -88,18 +88,7 @@ def edit(request):
         }
         return render(request, 'customers/edit_profile.html', context)
 
-@login_required
-def delete(request, customer_id):
-    logged_in_user = request.user
-    logged_in_employees = Employee.objects.get(user=logged_in_user)
-    customer_from_db = Customer.objects.get(pk=customer_id)
-    if request.method == 'POST':
-        customer_from_db.name = request.POST.get('name')
-        customer_from_db.address = request.POST.get('address')
-        customer_from_db.zip_code = request.POST.get('zip_code')
-        customer_from_db.weekly_pickup = request.POST.get('weekly_pickup')
-    customer_from_db.delete()
-    return HttpResponseRedirect(reverse('players:index'))
+
 
 class CustomerListView(generic.ListView):
     # Generic views often require you to tell it what model it will be based on, where the template is located,
