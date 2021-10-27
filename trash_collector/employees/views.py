@@ -29,9 +29,7 @@ def index(request):
         day_of_week = calendar.day_name[today.weekday()]
         todays_pickup = Customer.objects.filter(weekly_pickup=day_of_week) | Customer.objects.filter(one_time_pickup=today)
         customers_today =todays_pickup.filter(zip_code=logged_in_employees.zip_code) and todays_pickup.exclude(date_of_last_pickup=today)
-        non_suspended = customers_today.exclude(suspend_start__lt=today, suspend_end__gt=today) 
-       
-        
+        non_suspended = customers_today.exclude(suspend_start__lt=today, suspend_end__gt=today)         
         context = {
             'logged_in_employees': logged_in_employees,
             'today': today,
@@ -39,8 +37,7 @@ def index(request):
             'todays_pickup': todays_pickup,
             "customers_today": customers_today,
             #'one_time': one_time,
-            'non_suspended': non_suspended
-            
+            'non_suspended': non_suspended     
         }
         return render(request, 'employees/index.html', context)
     except ObjectDoesNotExist:
@@ -125,4 +122,28 @@ def get_queryset(self):
     self.customers = Customer.objects.get(Customer, name=self.kwargs['customers'])
     return Customer.objects.filter(customers=self.customers)
 
+def weekly_pickup(request):
+    logged_in_user = request.user
+    logged_in_employees = Employee.objects.get(user=logged_in_user)
+    today = date.today
+    
+    context = {
+        'today': today
+    }
+    return render(request, 'employees/weekly_pickup.html', context)
+
+# @login_required
+# def edit_profile(request):
+#     logged_in_user = request.user
+#     logged_in_employees = Employee.objects.get(user=logged_in_user)
+#     if request.method == "POST":
+#         name_from_form = request.POST.get('name')
+#         address_from_form = request.POST.get('address')
+#         zip_from_form = request.POST.get('zip_code')
+#         return HttpResponseRedirect(reverse('employees:index'))
+#     else:
+#         context = {
+#             'logged_in_employees': logged_in_employees
+#         }
+#         return render(request, 'employees/edit_profile.html', context)
     
