@@ -28,20 +28,17 @@ def index(request):
         logged_in_employees = Employee.objects.get(user=logged_in_user)
         today = date.today()
         day_of_week = calendar.day_name[today.weekday()]
-        todays_pickup = Customer.objects.filter(weekly_pickup = day_of_week)
-        customers_today =todays_pickup.filter(zip_code = logged_in_employees.zip_code)
-        # one_time = Customer.objects.filter(one_time_pickup = today)
-        # non_suspended = Customer.objects.filter(suspend_end = "No")
+        todays_pickup = Customer.objects.filter(weekly_pickup=day_of_week) | Customer.objects.filter(one_time_pickup=today)
+        customers_today =todays_pickup.filter(zip_code=logged_in_employees.zip_code) and todays_pickup.exclude(date_of_last_pickup=today)
+        non_suspended = customers_today.exclude(suspend_start__lt=today, suspend_end__gt=today) 
+       
         
         context = {
             'logged_in_employees': logged_in_employees,
             'today': today,
             'day_of_week': day_of_week,
-            'todays_pickup': todays_pickup,
-            "customers_today": customers_today,
-            # 'one_time': one_time,
-            # 'non_suspended': non_suspended
-            
+            'non_suspended': non_suspended
+                        
         }
         return render(request, 'employees/index.html', context)
     except ObjectDoesNotExist:
@@ -86,6 +83,7 @@ def detail(request, customer_id):
 def edit(request):
     logged_in_user = request.user
     logged_in_employees = Employee.objects.get(user=logged_in_user)
+    Customer = apps.get_model('customers.Customer')
     customer_from_db = Customer.objects.get(pk=request)
     if request.method == 'POST':
         
@@ -101,7 +99,12 @@ def edit(request):
         }
         return render(request, 'customers/edit_profile.html', context)
 
-
+def confirm(request, customer_id):
+    # use customer_id to query for the correct customer
+    # use dot notation to change its values
+    # save customer on database
+    # redirect back to index
+    pass
 
 class CustomerListView(generic.ListView):
     # Generic views often require you to tell it what model it will be based on, where the template is located,
@@ -117,7 +120,7 @@ class CustomerListView(generic.ListView):
         Customer = apps.get_model('customers.Customer')
         # query for the Team object with the pk that got passed in from the url path in urls.py
         # self.kwargs contains the named arguments passed in from the url, in this case 'team'
-        self.customer = get_object_or_404(Customer, name=self.kwargs['customer'])
+        # self.customer =(Customer, name=self.kwargs['customer'])
         # query set will return all the Player objects whose team matches the team we just found
         return Customer.objects.filter(weekly_pickup=self.customer)
 

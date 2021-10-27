@@ -11,11 +11,11 @@
     <p>{{day_of_week}}</p>
     <p>{{today}}</p>
     
-    <h3> Customers for the day are:</h3>
+    <h3> Today's Customers are:</h3>
 
       <ul>
-        {% for customer in customers_today %}
-        <li>{{customer.name}}</li>
+        {% for customer in non_suspended %}
+        <p>{{customer.name}}</p>
         {% endfor %}
       </ul>
 
