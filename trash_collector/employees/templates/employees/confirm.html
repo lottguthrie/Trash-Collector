@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} Customer Pickup Confirmation {% endblock %}
+
+{% block header %} Confirm Pickup {% endblock %}
+
+{% block content %}
+    <h3> Customers for the day are:</h3>
+
+    <ul>
+      {% for customer in customers_today %}
+      <li>{{customer.name}}</li>
+      {% endfor %}
+<br />
+<form action="{% url 'employees:confirm' %}" method="post">
+    {% csrf_token %}
+
+    </ul>
+    : <input type="int" name="balance" id="balance" value="{{logged_in_customer.customer_balance}}">
+    <br />
+    <br />
+
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}
