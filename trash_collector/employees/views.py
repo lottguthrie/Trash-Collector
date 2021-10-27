@@ -27,10 +27,10 @@ def index(request):
         logged_in_employees = Employee.objects.get(user=logged_in_user)
         today = date.today()
         day_of_week = calendar.day_name[today.weekday()]
-        todays_pickup = Customer.objects.filter(weekly_pickup = day_of_week)
-        customers_today =todays_pickup.filter(zip_code = logged_in_employees.zip_code)
-        #one_time = Customer.objects.filter(one_time_pickup = today)
-        #non_suspended = Customer.objects.filter(suspend_end = "No")
+        todays_pickup = Customer.objects.filter(weekly_pickup=day_of_week) | Customer.objects.filter(one_time_pickup=today)
+        customers_today =todays_pickup.filter(zip_code=logged_in_employees.zip_code) and todays_pickup.exclude(date_of_last_pickup=today)
+        non_suspended = customers_today.exclude(suspend_start__lt=today, suspend_end__gt=today) 
+       
         
         context = {
             'logged_in_employees': logged_in_employees,
@@ -39,7 +39,7 @@ def index(request):
             'todays_pickup': todays_pickup,
             "customers_today": customers_today,
             #'one_time': one_time,
-            #'non_suspended': non_suspended
+            'non_suspended': non_suspended
             
         }
         return render(request, 'employees/index.html', context)
@@ -110,7 +110,12 @@ def confirm(request):
        }
         return render(request, 'customers/confirm.html', context)
 
-
+def confirm(request, customer_id):
+    # use customer_id to query for the correct customer
+    # use dot notation to change its values
+    # save customer on database
+    # redirect back to index
+    pass
 
 
 
