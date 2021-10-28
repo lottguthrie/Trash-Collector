@@ -1,9 +1,54 @@
+    
 {% extends 'employees/employee_base.html' %}
-
-{% block title %}{% block header %} Weekly at a Glance {% endblock %}{% endblock %}
+<p>{{today}}</p>
+{% block title %}{% block header %} Week at a Glance {% endblock %}{% endblock %}
 
 {% block content %}
 
-<p>{{today}}</p>
+
+
+<form action="{% url 'employees:weekly_pickup' %}" method="post">
+    {% csrf_token %}
+    Search by Entering a Day of the Week: <input type="text" name='weekly_pickup' id='weekly_pickup' value="{{customers_today.weekly_pickup}}">
+    <br />
+    <br />
+    <input type="submit" value="Submit">
+    <!-- <button type="button" class="btn btn-warning">Submit </button>   -->
+    <p>{{today}}</p>
+</form>
+
+    {% for customer in customer_today %}
+    {{day_entered}}
+    {% endfor %}
+
+
+
+
+                                   
+    <!-- <div class="dropdown">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-mdb-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Dropdown button
+        </button>
+                
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for customer in week_days %}
+            <li><a class="dropdown-item" href='employees: weekly_pickup', 0>Monday</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            {% endfor %}     
+        </ul>        
+      </div> -->
+  <!-- <ul>
+    {% for customer in selected_day %}
+    <p>{{customer.name}}</p>
+    {% endfor %}
+  </ul> -->
+
 
 {% endblock %}
+
