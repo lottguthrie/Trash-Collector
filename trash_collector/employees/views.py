@@ -6,14 +6,13 @@ from django.apps import apps
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-from datetime import date
-from django.db.models import Q
-from django.db.models import F
+from datetime import date, datetime
+
 
 from.models import Employee
 from customers.models import Customer
 import calendar
-from calendar import weekday
+
 
 
 # TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
@@ -74,24 +73,18 @@ def edit_profile(request):
 
 
 @login_required
-def confirm(request):
-    Customer = apps.get_model('customers.Customer')
-    logged_in_user = request.user
+def confirm(request, customer_id):
     try:
-        logged_in_employees = Employee.objects.get(user=logged_in_user)
-        update_customers =  Customer.objects.filter(id=0)
-        customer_balance = update_customers.update(balance=+20)
-        form = Customer(request.POST or None)
-        is_valid = True
+        Customer = apps.get_model('customers.Customer')
+        customer_pickup = Customer.objects.get(id = customer_id)
+        customer_pickup.balance += 20
+        customer_pickup.date_of_last_pickup = datetime.now()
+        customer_pickup.save()
+
+        return render(request, 'employees/confirm.html')
     except ObjectDoesNotExist:
-        return HttpResponseRedirect(reverse('employees:confirm'))   
+        return HttpResponseRedirect(reverse('employees:index'))
 
-
-    context= {
-        'customer_balance': customer_balance
-            
-        }
-    return render(request, 'employees/confirm.html') 
 
 
 
@@ -107,18 +100,5 @@ def weekly_pickup(request):
     }
     return render(request, 'employees/weekly_pickup.html', context)
 
-# @login_required
-# def edit_profile(request):
-#     logged_in_user = request.user
-#     logged_in_employees = Employee.objects.get(user=logged_in_user)
-#     if request.method == "POST":
-#         name_from_form = request.POST.get('name')
-#         address_from_form = request.POST.get('address')
-#         zip_from_form = request.POST.get('zip_code')
-#         return HttpResponseRedirect(reverse('employees:index'))
-#     else:
-#         context = {
-#             'logged_in_employees': logged_in_employees
-#         }
-#         return render(request, 'employees/edit_profile.html', context)
+
     

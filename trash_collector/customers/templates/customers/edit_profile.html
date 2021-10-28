@@ -5,7 +5,7 @@
 {% block header %} Update Your Information {% endblock %}
 
 {% block content %}
-<div class="mx-auto bg-info text-white text-center"><Centered</div>           
+<div class="mx-auto bg-info text-primary text-center"><Centered</div>           
         {% load static %}<img class="img-fluid" src="/static/image/trash_collection.jpg" alt="Trash photo">
       </div>
 <br />
@@ -23,7 +23,9 @@
     Weekly Pickup Day: <input type="text" name="weekly" id="weekly" value="{{logged_in_customer.weekly_pickup}}">
     <br />
     <input type="submit" value="Submit">
+    
 </form>
+
 <p>Click the links below to go to that section.</p>
        
 <li class="nav-item">
@@ -34,7 +36,4 @@
 <a class="nav-item nav-link" href="{% url 'employees:edit_profile' %}">Edit Profile</a>        
 <li class="nav-item">
 <a class="nav-link active">
-<a class="nav-item nav-link" href="{% url 'employees:confirm' %}">Confirm Customer Pickup</a>
-<li class="nav-item">       
-</li>
 {% endblock %}

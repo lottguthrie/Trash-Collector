@@ -30,7 +30,7 @@
   </div>
 </nav>
 <div class="float-center"></div>
-    <div class="mx-auto bg-info text-white text-center">
+    <div class="mx-auto bg-info text-primary text-center">
 <body>    
           <h3> Customers for the day are:</h3>
       {% for customer in customers_today %}
@@ -45,7 +45,7 @@
       <h5>Would you like to confirm pickup and charge the customers account?</h5>
       <button type="button" class="btn btn-success">
         <form action='actionUrl' method='GET'>
-        <a href="{% url 'employees:confirm' %}">Confirm</a>
+        <a href="{% url 'employees:index' %}">Confirm</a>
         </form>
         <div class="form-check">
             <div class="float-center"></div>
@@ -67,10 +67,7 @@
       	<li class="nav-item">
         <a class="nav-link active">
         <a class="nav-item nav-link" href="{% url 'employees:edit_profile' %}">Edit Profile</a>        
-        <li class="nav-item">
-        <a class="nav-link active">
-        <a class="nav-item nav-link" href="{% url 'employees:confirm' %}">Confirm Customer Pickup</a>
-        <li class="nav-item">       
+        <li class="nav-item"> 
         </li>
 </body>
 {% endblock %}
