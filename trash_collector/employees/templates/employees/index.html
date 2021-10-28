@@ -4,7 +4,7 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello Employee {{ user.username }}!
+    Hello Employee {{user.username}}!
     <br />
     <br />
     <h3>Today is:</h3>
@@ -18,7 +18,7 @@
         <p>{{customer.name}}</p>
         {% endfor %}
       </ul>
-      <div class="mx-auto bg-info text-white text-center"><Centered</div>           
+    <div class="mx-auto bg-info text-white text-center"><Centered</div>           
       {% load static %}<img class="img-fluid" src="/static/image_2/city.jpg" alt="city photo">
     </div>
       
