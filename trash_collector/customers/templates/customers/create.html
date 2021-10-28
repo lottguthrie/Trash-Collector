@@ -15,5 +15,17 @@
     Choose your Weekly Pickup Day: <input type="text" name="weekly_pickup" id="weekly_pickup"><br />
     <input type="submit" value="Register">
 </form>
-
+<p>Click the links below to go to that section.</p>
+       
+<li class="nav-item">
+<a class="nav-link active">
+<a class="nav-item nav-link" href="{% url 'employees:index' %}">Home</a>
+<li class="nav-item">
+<a class="nav-link active">
+<a class="nav-item nav-link" href="{% url 'employees:edit_profile' %}">Edit Profile</a>        
+<li class="nav-item">
+<a class="nav-link active">
+<a class="nav-item nav-link" href="{% url 'employees:confirm' %}">Confirm Customer Pickup</a>
+<li class="nav-item">       
+</li>
 {% endblock %}

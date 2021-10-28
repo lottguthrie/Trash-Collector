@@ -47,6 +47,11 @@
         <form action='actionUrl' method='GET'>
         <a href="{% url 'employees:confirm' %}">Confirm</a>
         </form>
+        <div class="form-check">
+            <div class="float-center"></div>
+            <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something" checked>
+            <label class="form-check-label">Option 1</label>
+          </div>
     </button>
     <button type="button" class="btn btn-danger">
         <a href="{% url 'employees:index' %}">Do Not Confirm</a>

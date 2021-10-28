@@ -17,6 +17,9 @@
         {% if logged_in_customer.one_time_pickup %}
           You have an extra pickup scheduled for {{ logged_in_customer.one_time_pickup }}
         {% endif %}
+        <div class="mx-auto bg-info text-white text-center"><Centered</div>           
+        {% load static %}<img class="img-fluid" src="/static/image/trash_truck.jpg" alt="Trash truck">
+      </div>
         <br />
         <br />
         {% if today > logged_in_customer.suspend_start and today < logged_in_customer.suspend_end %}
@@ -28,7 +31,4 @@
     <a href="{% url 'login' %}">Log In</a>
     <a href="{% url 'accounts:register' %}">Sign Up</a>
   {% endif %}
-  <div class="mx-auto bg-info text-white text-center"><Centered</div>           
-        {% load static %}<img class="img-fluid" src="/static/image_2/city.jpg" alt="city photo">
-      </div>
 {% endblock %}

@@ -5,6 +5,9 @@
 {% block header %} Choose Suspension Dates {% endblock %}
 
 {% block content %}
+<div class="mx-auto bg-info text-white text-center"><Centered</div>           
+        {% load static %}<img class="img-fluid" src="/static/image/account.jpg" alt="Account">
+      </div>
 <br />
 <form action="{% url 'customers:suspend' %}" method="post">
     {% csrf_token %}
@@ -16,5 +19,17 @@
     <br />
     <input type="submit" value="Submit">
 </form>
-
+<p>Click the links below to go to that section.</p>
+       
+<li class="nav-item">
+<a class="nav-link active">
+<a class="nav-item nav-link" href="{% url 'employees:index' %}">Home</a>
+<li class="nav-item">
+<a class="nav-link active">
+<a class="nav-item nav-link" href="{% url 'employees:edit_profile' %}">Edit Profile</a>        
+<li class="nav-item">
+<a class="nav-link active">
+<a class="nav-item nav-link" href="{% url 'employees:confirm' %}">Confirm Customer Pickup</a>
+<li class="nav-item">       
+</li>
 {% endblock %}
