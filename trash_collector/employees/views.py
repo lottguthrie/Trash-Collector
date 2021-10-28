@@ -1,4 +1,5 @@
 
+from django.db.models.fields import Field
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.apps import apps
@@ -30,7 +31,7 @@ def index(request):
         todays_pickup = Customer.objects.filter(weekly_pickup=day_of_week) | Customer.objects.filter(one_time_pickup=today)
         customers_today =todays_pickup.filter(zip_code=logged_in_employees.zip_code) and todays_pickup.exclude(date_of_last_pickup=today)
         non_suspended = customers_today.exclude(suspend_start__lt=today, suspend_end__gt=today) 
-       
+
         
         context = {
             'logged_in_employees': logged_in_employees,
@@ -77,52 +78,26 @@ def edit_profile(request):
 
 @login_required
 def confirm(request):
-    Employee = apps.get_model('employees.Employee')
     Customer = apps.get_model('customers.Customer')
     logged_in_user = request.user
-    logged_in_employees = Employee.objects.get(user= logged_in_user)
-    customers_id = request.user
-    today = date.today
-    day_of_week = calendar.day_name[today.weekday()]
-    one_time = Customer.objects.filter(one_time_pickup = today)
-    todays_pickup = Customer.objects.filter(weekly_pickup = day_of_week)
-    customers_today = todays_pickup.filter(zip_code=logged_in_employees.zip_code)
-    non_suspended = customers_today.exclude(suspend_start__lt = today, suspend_end__gt = today)
-    customer_from_db = Customer.objects.get(user=customers_id)
-    customer_from_db = Customer.objects.get(Q(customers_id= customers_today))
-    customer_from_db = Customer.objects.update(balance=F('balance')+20)
-    if request.method == 'POST':
-        customer_from_db.balance = request.POST.get('balance')
-        customer_from_db.save()
-        return HttpResponseRedirect(reverse('customers:confirm'))
-    else:
-        Customer = apps.get_model('customers.Customer')
-        all_customers = Customer.objects.all()
-        context = {
-            'customers': customer_from_db,
-            'all_customers': all_customers,
-            'logged_in_employees': logged_in_employees,
-            'today': today,
-            'day_of_week' : day_of_week,
-            'non_suspended' : non_suspended,
-            'one_time' : one_time,
-            'logged_in_user' : logged_in_user
-       }
-        return render(request, 'customers/confirm.html', context)
+    try:
+        logged_in_employees = Employee.objects.get(user=logged_in_user)
+        update_customers =  Customer.objects.filter(id=0)
+        customer_balance = update_customers.update(balance=+20)
+        form = Customer(request.POST or None)
+        is_valid = True
+    except ObjectDoesNotExist:
+        return HttpResponseRedirect(reverse('employees:confirm'))   
 
-def confirm(request, customer_id):
-    # use customer_id to query for the correct customer
-    # use dot notation to change its values
-    # save customer on database
-    # redirect back to index
-    pass
+
+    context= {
+        'customer_balance': customer_balance
+            
+        }
+    return render(request, 'employees/confirm.html') 
 
 
 
     
-def get_queryset(self):
-    Customer = apps.get_model('customers.Customer')
-    self.customers = Customer.objects.get(Customer, name=self.kwargs['customers'])
-    return Customer.objects.filter(customers=self.customers)
 
     

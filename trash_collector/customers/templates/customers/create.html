@@ -3,9 +3,10 @@
 {% block title %} Customer Create {% endblock %}
 
 {% block header %} Please Complete Registration {% endblock %}
-
+<div class="mx-auto bg-info text-white text-center"><Centered</div>           
+        {% load static %}<img class="img-fluid" src="/static/image/happy.jpg" alt="Happy Face">
+      </div>
 {% block content %}
-
 <form action="{% url 'customers:create' %}" method="post">
     {% csrf_token %}
     Name: <input type="text" name="name" id="name"><br />
