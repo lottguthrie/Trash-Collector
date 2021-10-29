@@ -16,38 +16,35 @@
     <!-- <button type="button" class="btn btn-warning">Submit </button>   -->
     <p>{{today}}</p>
 </form>
+    <label for="week">Select a Day of the Week:</label>
+        <select name="week" id="week">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+        </select>
+    <input type="submit" value=Select>
+</form action="{% url 'employees:weekly_pickup' %}" method="post">
+<br />
+<br />
+<br />
+    
+    
+   
+you selected {{day_chose}}
 
     {% for customer in customer_today %}
-    {{day_entered}}
+    {{customer.name}}
+    <!-- {{today}}
+    {{day_entered}} -->
     {% endfor %}
 
 
 
 
                                    
-    <!-- <div class="dropdown">
-        <button
-          class="btn btn-primary dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton"
-          data-mdb-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Dropdown button
-        </button>
-                
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {% for customer in week_days %}
-            <li><a class="dropdown-item" href='employees: weekly_pickup', 0>Monday</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            {% endfor %}     
-        </ul>        
-      </div> -->
-  <!-- <ul>
-    {% for customer in selected_day %}
-    <p>{{customer.name}}</p>
-    {% endfor %}
-  </ul> -->
+   
 
 
 {% endblock %}

@@ -85,40 +85,29 @@ def confirm(request, customer_id):
         return HttpResponseRedirect(reverse('employees:index'))
 
 
-
-
-    
-
 def weekly_pickup(request):
-    Customer = apps.get_model('customers.Customer')
-    # logged_in_user = request.user
-    # logged_in_employees = Employee.objects.get(user=logged_in_user)
     today = date.today()
-
+    Customer = apps.get_model('customers.Customer')
+    logged_in_user = request.user
+    logged_in_employees = Employee.objects.get(user=logged_in_user)
+    
     if request.method =="POST":
-        day_entered = request.POST.get('weekly_pickup')
-        customers_today = Customer.objects.filter(weekly_pickup=day_entered)
-
-    # try:
-    #     
-    #     day_of_week = calendar.day_name[today.weekday()]
-    #     todays_pickup = Customer.objects.filter(weekly_pickup=day_of_week)
-    #     customers_today =todays_pickup.filter(zip_code=logged_in_employees.zip_code)
-    #     week_days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-    #     selected_day = customers_today.filter(weekly_pickup=week_days)
+        day_entered = request.POST.get('week')
+        day_chosen = day_entered
+        Customer = apps.get_model('customers.Customer')     
+        all_customers_today = Customer.objects.filter(weekly_pickup=day_chosen)
+        customers_today = all_customers_today.filter(zip_code=logged_in_employees.zip_code)
 
         context = {
-            # 'logged_in_employees': logged_in_employees,
             'today': today,
-            'day_entered':day_entered,    
+            'day_chose': day_chosen,    
             'customers_today': customers_today   
     }
-        return render(request, 'employees/weekly_pickup.html', context)
+        return render(request, 'employees/index.html', context)
     
     else:
         return render(request, 'employees/weekly_pickup.html')
 
-    #     return HttpResponseRedirect(reverse('employees:weekly_pickup'))
 
         
        
