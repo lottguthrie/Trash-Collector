@@ -9,13 +9,6 @@
 
 <form action="{% url 'employees:weekly_pickup' %}" method="post">
     {% csrf_token %}
-    Search by Entering a Day of the Week: <input class="rounded" type="text" name='weekly_pickup' id='weekly_pickup' value="{{customers_today.weekly_pickup}}">
-    <br />
-    <br />
-    <input class="rounded" type="submit" value="Submit">
-    <!-- <button type="button" class="btn btn-warning">Submit </button>   -->
-    <p>{{today}}</p>
-</form>
     <label for="week">Select a Day of the Week:</label>
         <select name="week" id="week">
             <option value="Monday">Monday</option>
