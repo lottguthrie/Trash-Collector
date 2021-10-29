@@ -10,12 +10,12 @@
 
 <form action="{% url 'employees:create' %}" method="post">
     {% csrf_token %}
-    Name: <input type="text" name="name" id="name"><br />
+    Name: <input class="rounded" type="text" name="name" id="name"><br />
 
-    Address: <input type="text" name="address" id="address"><br />
-    Zip Code: <input type="text" name="zip_code" id="zip_code"><br />
+    Address: <input class="rounded" type="text" name="address" id="address"><br />
+    Zip Code: <input class="rounded" type="text" name="zip_code" id="zip_code"><br />
     
-    <input type="submit" value="Register">
+    <input class="rounded" type="submit" value="Register">
 </form>
 
 {% endblock %}

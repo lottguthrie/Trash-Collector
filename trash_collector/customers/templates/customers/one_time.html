@@ -8,10 +8,10 @@
 <br />
 <form action="{% url 'customers:one_time' %}" method="post">
     {% csrf_token %}
-    Date of Pick Up: <input type="date" name="date" id="date">
+    Date of Pick Up: <input class="rounded" type="date" name="date" id="date">
     <br />
     <br />
-    <input type="submit" value="Submit">
+    <input class="rounded" type="submit" value="Submit">
 </form>
 <div class="mx-auto bg-info text-primary text-center"><Centered</div>           
 {% load static %}<img class="img-fluid" src="/static/image/happy.jpg" alt="Happy Face">

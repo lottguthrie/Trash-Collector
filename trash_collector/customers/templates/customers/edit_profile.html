@@ -11,18 +11,18 @@
 <br />
 <form action="{% url 'customers:edit_profile' %}" method="post">
     {% csrf_token %}
-    Name: <input type="text" name="name" id="name" value="{{logged_in_customer.name}}">
+    Name: <input class="rounded"  type="text" name="name" id="name" value="{{logged_in_customer.name}}">
     <br />
     <br />
-    Address: <input type="text" name="address" id="address" value="{{logged_in_customer.address}}">
+    Address: <input class="rounded" type="text" name="address" id="address" value="{{logged_in_customer.address}}">
     <br />
     <br />
-    Zip Code: <input type="text" name="zip_code" id="zip_code" value="{{logged_in_customer.zip_code}}">
+    Zip Code: <input class="rounded" type="text" name="zip_code" id="zip_code" value="{{logged_in_customer.zip_code}}">
     <br />
     <br />
-    Weekly Pickup Day: <input type="text" name="weekly" id="weekly" value="{{logged_in_customer.weekly_pickup}}">
+    Weekly Pickup Day: <input class="rounded" type="text" name="weekly" id="weekly" value="{{logged_in_customer.weekly_pickup}}">
     <br />
-    <input type="submit" value="Submit">
+    <input class="rounded" type="submit" value="Submit">
     
 </form>
 
