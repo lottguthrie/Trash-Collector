@@ -1,1 +1,1 @@
-# trash_collector_starter
+Customer and Employee database Interface built with Django and MySQL.
